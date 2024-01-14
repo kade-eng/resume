@@ -2,6 +2,8 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f8f8f8; /* Light background color for better readability */
+    color: #333; /* Dark text color for better contrast */
 }
 
 header {
@@ -15,8 +17,12 @@ h1 {
     margin: 0;
 }
 
-.contact, .education, .experience, .projects, .skills{
+.contact, .education, .experience, .projects, .skills {
     margin: 20px;
+    background-color: #fff; /* White background for each section */
+    border-radius: 8px; /* Add a subtle border radius for a modern look */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
+    padding: 20px;
 }
 
 h2 {
@@ -36,11 +42,11 @@ section {
 
 ul {
     list-style-type: disc;
-    padding-left: 20px; 
+    padding-left: 20px;
 }
 
-section {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
+@media screen and (max-width: 768px) {
+    .contact, .education, .experience, .projects, .skills {
+        margin: 10px;
+    }
 }
