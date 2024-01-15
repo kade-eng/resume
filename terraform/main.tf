@@ -23,10 +23,17 @@ provider "google-beta" {
   zone    = "us-east1-b"
 }
 
+#bucket
 resource "google_storage_bucket" "website_bucket" {
   provider = google
   name     = "kades-resume-website"
   location = "US"
 
   force_destroy = true
+}
+
+resource "google_storage_default_object_access_control" "bucket_read" {
+  bucket = google_storage_bucket.website_bucket.name
+  role   = "READER"
+  entity = "allUsers"
 }
