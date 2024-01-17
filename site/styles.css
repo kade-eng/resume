@@ -1,52 +1,131 @@
-body {
-    font-family: 'Arial', sans-serif;
+body, h1, h2, p, ul, li {
     margin: 0;
     padding: 0;
-    background-color: #f8f8f8; /* Light background color for better readability */
-    color: #333; /* Dark text color for better contrast */
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f8f8f8;
+    color: #333;
 }
 
 header {
     background-color: #3498db;
     color: #fff;
     text-align: center;
-    padding: 20px;
+    padding: 20px 0;
 }
 
 h1 {
-    margin: 0;
+    font-size: 2em;
+    margin-bottom: 5px;
 }
 
-.contact, .education, .experience, .projects, .skills {
+.j1 {
+    margin-bottom: 30px;
+}
+
+.contact, .education, .experience, .projects, .skills, .about-me, .about-proj {
     margin: 20px;
-    background-color: #fff; /* White background for each section */
-    border-radius: 8px; /* Add a subtle border radius for a modern look */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
 }
 
-h2 {
+.contact {
+    background-color: #e5e9ea;
+    padding: 20px;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact h2 {
+    text-align: center;
     color: #3498db;
+    margin-bottom: 15px;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
+.contact p {
+    margin: 5px 0;
 }
 
-section {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
+/* Links Styles */
+a {
+    color: #3498db;
+    text-decoration: none;
 }
 
-ul {
-    list-style-type: disc;
+a:hover {
+    text-decoration: underline;
+}
+
+/* Skills Section Styles */
+.skills h2 {
+    color: #2ecc71;
+}
+
+/* Experience Section Styles */
+.experience h2 {
+    color: #e74c3c;
+}
+
+.experience ul,
+.projects ul {
+    list-style-type: square;
     padding-left: 20px;
 }
 
+.experience li,
+.projects li {
+    margin-bottom: 2px;
+}
+
+/* Projects Section Styles */
+.projects h2 {
+    color: #f39c12;
+}
+
+/* Education Section Styles */
+.education h2 {
+    color: #6808a0;
+}
+
+/* About Me Section Styles */
+.about-me h2 {
+    color: #3498db;
+}
+
+.about-me p {
+    text-align: left;
+    margin-bottom: 15px; /* Adjust the margin-bottom value as needed */
+}
+
+.about-me img {
+    display: block;
+    max-width: 600px; /* Set maximum width to 100% of the container */
+    margin: 15px auto; /* Add margin for spacing */
+}
+
+/* About Me Section Styles */
+.about-proj h2 {
+    color: #3498db;
+}
+
+/* Responsive Styling */
 @media screen and (max-width: 768px) {
-    .contact, .education, .experience, .projects, .skills {
-        margin: 10px;
+    header {
+        padding: 15px 0;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    .contact, .skills, .experience, .projects, .education {
+        padding: 15px;
     }
 }
