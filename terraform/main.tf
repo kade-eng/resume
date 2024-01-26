@@ -40,6 +40,10 @@ resource "google_storage_bucket_object" "css_file" {
   name   = "styles.css"
   bucket = google_storage_bucket.my_bucket.name
   source = "../site/styles.css"
+  content_type = "text/css"
+  metadata = {
+    "Cache-Control" = "no-cache"
+  }
 }
 
 resource "google_storage_bucket_object" "old_img" {
