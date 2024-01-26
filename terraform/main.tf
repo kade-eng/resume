@@ -43,13 +43,13 @@ resource "google_storage_bucket_object" "css_file" {
 }
 
 resource "google_storage_bucket_object" "old_img" {
-  name   = "old.png"
+  name   = "imgs/old.png"
   bucket = google_storage_bucket.my_bucket.name
   source = "../site/imgs/old.png"
 }
 
 resource "google_storage_bucket_object" "new_img" {
-  name   = "new.png"
+  name   = "imgs/new.png"
   bucket = google_storage_bucket.my_bucket.name
   source = "../site/imgs/new.png"
 }
