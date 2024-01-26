@@ -4,20 +4,10 @@ terraform {
       source = "hashicorp/google"
       version = "5.10.0"
     }
-    google-beta = {
-      source = "hashicorp/google-beta"
-      version = "5.10.0"
-    }
   }
 }
 
 provider "google" {
-  project = "sincere-pixel-410716"
-  region  = "us-central1"
-  zone    = "us-central1-b"
-}
-
-provider "google-beta" {
   project = "sincere-pixel-410716"
   region  = "us-central1"
   zone    = "us-central1-b"
@@ -93,6 +83,15 @@ resource "google_dns_record_set" "www_record" {
   rrdatas = ["kade-bc.com."]
 }
 
+# Create HTTPS certificate
+resource "google_compute_managed_ssl_certificate" "website" {
+  provider = google
+  name     = "website-cert"
+  managed {
+    domains = ["kade-bc.com", "www.kade-bc.com"]
+  }
+}
+
 # Add the bucket as a CDN backend
 resource "google_compute_backend_bucket" "website" {
   provider    = google
@@ -100,15 +99,6 @@ resource "google_compute_backend_bucket" "website" {
   description = "Contains files needed by the website"
   bucket_name = google_storage_bucket.my_bucket.name
   enable_cdn  = true
-}
-
-# Create HTTPS certificate
-resource "google_compute_managed_ssl_certificate" "website" {
-  provider = google-beta
-  name     = "website-cert"
-  managed {
-    domains = ["kade-bc.com", "www.kade-bc.com"]
-  }
 }
 
 # GCP URL MAP
@@ -135,4 +125,22 @@ resource "google_compute_global_forwarding_rule" "default" {
   ip_protocol           = "TCP"
   port_range            = "443"
   target                = google_compute_target_https_proxy.website.self_link
+}
+
+#HTTP access 
+resource "google_compute_target_http_proxy" "website_http" {
+  provider = google
+  name     = "website-target-http-proxy"
+  url_map  = google_compute_url_map.website.self_link
+}
+
+# GCP forwarding rule for HTTP traffic
+resource "google_compute_global_forwarding_rule" "http" {
+  provider              = google
+  name                  = "website-forwarding-rule-http"
+  load_balancing_scheme = "EXTERNAL"
+  ip_address            = google_compute_global_address.website.address
+  ip_protocol           = "TCP"
+  port_range            = "80"
+  target                = google_compute_target_http_proxy.website_http.self_link
 }
