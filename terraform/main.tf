@@ -46,6 +46,16 @@ resource "google_storage_bucket_object" "css_file" {
   }
 }
 
+resource "google_storage_bucket_object" "css_file2" {
+  name   = "styles2.css"
+  bucket = google_storage_bucket.my_bucket.name
+  source = "../site/styles.css"
+  content_type = "text/css"
+  metadata = {
+    "Cache-Control" = "no-cache"
+  }
+}
+
 resource "google_storage_bucket_object" "old_img" {
   name   = "imgs/old.png"
   bucket = google_storage_bucket.my_bucket.name
@@ -80,19 +90,19 @@ resource "google_dns_record_set" "website" {
 resource "google_dns_record_set" "www_record" {
   provider     = google
   name         = "www.${google_dns_managed_zone.my_dns_zone.dns_name}"
-  type         = "CNAME"
+  type         = "A"
   ttl          = 300
   managed_zone = google_dns_managed_zone.my_dns_zone.name
-
-  rrdatas = ["kade-bc.com."]
+  rrdatas      = [google_compute_global_address.website.address]
 }
+
 
 # Create HTTPS certificate
 resource "google_compute_managed_ssl_certificate" "website" {
   provider = google
   name     = "website-cert"
   managed {
-    domains = ["kade-bc.com", "www.kade-bc.com"]
+    domains = [google_dns_record_set.website.name, google_dns_record_set.www_record.name]
   }
 }
 
