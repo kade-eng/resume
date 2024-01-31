@@ -1,0 +1,31 @@
+name: Deploy Terraform to GCP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    name: Terraform
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.6.6
+
+    - name: Change directory
+      run: cd terraform
+    
+    - name: Init
+      run: terraform init
+
+    - name: Apply
+      env:
+        GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+      run: terraform apply -auto-approve
+      working-directory: ./terraform
