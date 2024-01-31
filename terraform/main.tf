@@ -13,6 +13,13 @@ provider "google" {
   zone    = "us-central1-b"
 }
 
+terraform {
+  backend "gcs" {
+    bucket  = "terraform-state-kade"
+    prefix  = "terraform/state"
+  }
+}
+
 resource "google_storage_bucket" "my_bucket" {
   name          = "kade-site-bucket"
   location      = "US"
