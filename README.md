@@ -1,1 +1,1 @@
-This is the base code used to deploy my site. The site is not currently active (waiting for DNS records to propagate before continuing work).
+This is the base code used to deploy my website. You can access the site at kade-bc.com. 
