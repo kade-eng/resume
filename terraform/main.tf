@@ -73,36 +73,16 @@ resource "google_compute_global_address" "website" {
   name     = "website-lb-ip"
 }
 
-resource "google_dns_managed_zone" "my_dns_zone" {
-  name     = "kade-bc-zone"
-  dns_name = "kade-bc.com."
+data "google_dns_managed_zone" "my_dns_zone" {
+  name     = "my-zone"
 }
-
-resource "google_dns_record_set" "website" {
-  provider     = google
-  name         = google_dns_managed_zone.my_dns_zone.dns_name
-  type         = "A"
-  ttl          = 300
-  managed_zone = google_dns_managed_zone.my_dns_zone.name
-  rrdatas      = [google_compute_global_address.website.address]
-}
-
-resource "google_dns_record_set" "www_record" {
-  provider     = google
-  name         = "www.${google_dns_managed_zone.my_dns_zone.dns_name}"
-  type         = "A"
-  ttl          = 300
-  managed_zone = google_dns_managed_zone.my_dns_zone.name
-  rrdatas      = [google_compute_global_address.website.address]
-}
-
 
 # Create HTTPS certificate
 resource "google_compute_managed_ssl_certificate" "website" {
   provider = google
   name     = "website-cert"
   managed {
-    domains = [google_dns_record_set.website.name, google_dns_record_set.www_record.name]
+    domains = ["kade-bc.com", "www.kade-bc.com"]
   }
 }
 
