@@ -143,3 +143,10 @@ resource "google_firestore_database" "database" {
   location_id                       = "northamerica-northeast1"
   type                              = "FIRESTORE_NATIVE"
 }
+
+#Cloud Function
+resource "google_storage_bucket_object" "function_zip" {
+  name   = "your-function.zip"
+  bucket = google_storage_bucket.my_bucket.name
+  source = "function.zip"
+}

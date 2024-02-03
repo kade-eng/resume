@@ -23,6 +23,9 @@ jobs:
           echo "GOOGLE_APPLICATION_CREDENTIALS=${PWD}/gcp-key.json" >> $GITHUB_ENV
         working-directory: ./terraform
 
+      - name: Zip Cloud Function
+        run: zip -r function.zip /serverless/*
+
       - name: Terraform Init
         run: terraform init
         working-directory: ./terraform
