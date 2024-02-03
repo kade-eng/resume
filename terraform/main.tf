@@ -145,3 +145,11 @@ resource "google_compute_global_forwarding_rule" "http" {
   port_range            = "80"
   target                = google_compute_target_http_proxy.website_http.self_link
 }
+
+#Firestore database
+resource "google_firestore_database" "database" {
+  provider                          = google
+  name                              = "(default)"
+  location_id                       = "northamerica-northeast1"
+  type                              = "FIRESTORE_NATIVE"
+}
