@@ -158,7 +158,6 @@ resource "google_storage_bucket_object" "function_zip" {
 }
 
 resource "google_cloudfunctions_function" "default" {
-  depends_on = [google_storage_bucket_object.function_zip]
   name                  = "get-visitor-count"
   description           = "Connects to FireStore and returns the visitor count for the static site"
   runtime               = "nodejs20"
@@ -168,4 +167,6 @@ resource "google_cloudfunctions_function" "default" {
   source_archive_object = google_storage_bucket_object.function_zip.name
   trigger_http          = true
   entry_point           = "visitCounter"
+
+  depends_on = [google_storage_bucket_object.function_zip]
 }
