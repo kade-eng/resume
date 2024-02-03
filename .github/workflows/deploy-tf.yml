@@ -24,7 +24,7 @@ jobs:
         working-directory: ./terraform
 
       - name: Zip Cloud Function
-        run: zip -r function.zip /serverless/*
+        run: zip -r function.zip . -i /serverless/*
 
       - name: Terraform Init
         run: terraform init
