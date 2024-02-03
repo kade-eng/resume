@@ -53,16 +53,6 @@ resource "google_storage_bucket_object" "css_file" {
   }
 }
 
-resource "google_storage_bucket_object" "css_file2" {
-  name   = "styles2.css"
-  bucket = google_storage_bucket.my_bucket.name
-  source = "../site/styles.css"
-  content_type = "text/css"
-  metadata = {
-    "Cache-Control" = "no-cache"
-  }
-}
-
 resource "google_storage_bucket_object" "old_img" {
   name   = "imgs/old.png"
   bucket = google_storage_bucket.my_bucket.name
