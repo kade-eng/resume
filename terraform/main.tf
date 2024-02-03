@@ -146,7 +146,19 @@ resource "google_firestore_database" "database" {
 
 #Cloud Function
 resource "google_storage_bucket_object" "function_zip" {
-  name   = "your-function.zip"
+  name   = "function.zip"
   bucket = google_storage_bucket.my_bucket.name
   source = "function.zip"
+}
+
+resource "google_cloudfunctions_function" "default" {
+  name                  = "get-visitor-count"
+  description           = "Connects to FireStore and returns the visitor count for the static site"
+  runtime               = "nodejs16"
+
+  available_memory_mb   = 128
+  source_archive_bucket = google_storage_bucket.my_bucket.name
+  source_archive_object = google_storage_bucket_object.function_zip.name
+  trigger_http          = true
+  entry_point           = "visitCounter"
 }
