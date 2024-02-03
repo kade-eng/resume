@@ -38,7 +38,13 @@ h2 {
     border-bottom: 2px solid #ecf0f1; 
 }
 
-nav {
+.main-nav {
+    background-color: #aeafb1;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.counter-nav {
     background-color: #d2d3d6; 
     text-align: center;
     padding: 10px 0;

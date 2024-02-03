@@ -43,6 +43,12 @@ resource "google_storage_bucket_object" "html_file" {
   source = "../site/index.html"
 }
 
+resource "google_storage_bucket_object" "js_file" {
+  name   = "counter.js"
+  bucket = google_storage_bucket.my_bucket.name
+  source = "../site/counter.js"
+}
+
 resource "google_storage_bucket_object" "css_file" {
   name   = "styles.css"
   bucket = google_storage_bucket.my_bucket.name
