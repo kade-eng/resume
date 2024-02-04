@@ -170,3 +170,10 @@ resource "google_cloudfunctions_function" "default" {
 
   depends_on = [google_storage_bucket_object.function_zip]
 }
+
+resource "google_cloudfunctions_function_iam_binding" "public_invoker" {
+  cloud_function = google_cloudfunctions_function.default.name
+
+  role    = "roles/cloudfunctions.invoker"
+  members = ["allUsers"]
+}
