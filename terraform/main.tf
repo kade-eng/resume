@@ -118,7 +118,6 @@ resource "google_compute_global_forwarding_rule" "default" {
   provider              = google
   name                  = "website-forwarding-rule"
   load_balancing_scheme = "EXTERNAL"
-  network_tier = "STANDARD"
   ip_address            = google_compute_global_address.website.address
   ip_protocol           = "TCP"
   port_range            = "443"
@@ -137,7 +136,6 @@ resource "google_compute_global_forwarding_rule" "http" {
   provider              = google
   name                  = "website-forwarding-rule-http"
   load_balancing_scheme = "EXTERNAL"
-  network_tier = "STANDARD"
   ip_address            = google_compute_global_address.website.address
   ip_protocol           = "TCP"
   port_range            = "80"
