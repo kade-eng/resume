@@ -76,6 +76,10 @@ resource "google_compute_global_address" "website" {
   name     = "website-lb-ip"
 }
 
+resource "google_compute_project_default_network_tier" "default" {
+  network_tier = "STANDARD"
+}
+
 data "google_dns_managed_zone" "my_dns_zone" {
   name     = "my-zone"
 }
@@ -97,7 +101,7 @@ resource "google_compute_backend_bucket" "website" {
   bucket_name = google_storage_bucket.my_bucket.name
   enable_cdn  = true
 }
- network_tier = "STANDARD"
+
 # GCP URL MAP
 resource "google_compute_url_map" "website" {
   provider        = google
