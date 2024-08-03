@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "google" {
-  project = "sincere-pixel-410716"
+  project = "divine-precinct-431401-s5"
   region  = "us-central1"
   zone    = "us-central1-b"
 }
@@ -85,7 +85,7 @@ resource "google_compute_managed_ssl_certificate" "website" {
   provider = google
   name     = "website-cert"
   managed {
-    domains = ["kade-bc.com", "www.kade-bc.com"]
+    domains = ["kadebc.com", "www.kadebc.com"]
   }
 }
 

@@ -1,4 +1,4 @@
-const cors = require('cors')({origin: 'https://kade-bc.com'});
+const cors = require('cors')({origin: 'https://kadebc.com'});
 const {Firestore} = require('@google-cloud/firestore');
 const firestore = new Firestore();
 
