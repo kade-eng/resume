@@ -76,10 +76,6 @@ resource "google_compute_global_address" "website" {
   name     = "website-lb-ip"
 }
 
-resource "google_compute_project_default_network_tier" "default" {
-  network_tier = "STANDARD"
-}
-
 data "google_dns_managed_zone" "my_dns_zone" {
   name     = "my-zone"
 }
@@ -121,6 +117,7 @@ resource "google_compute_target_https_proxy" "website" {
 resource "google_compute_global_forwarding_rule" "default" {
   provider              = google
   name                  = "website-forwarding-rule"
+  network_tier = "STANDARD"
   load_balancing_scheme = "EXTERNAL"
   ip_address            = google_compute_global_address.website.address
   ip_protocol           = "TCP"
@@ -139,6 +136,7 @@ resource "google_compute_target_http_proxy" "website_http" {
 resource "google_compute_global_forwarding_rule" "http" {
   provider              = google
   name                  = "website-forwarding-rule-http"
+  network_tier = "STANDARD"
   load_balancing_scheme = "EXTERNAL"
   ip_address            = google_compute_global_address.website.address
   ip_protocol           = "TCP"
