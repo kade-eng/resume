@@ -80,10 +80,6 @@ resource "google_compute_project_default_network_tier" "default" {
   network_tier = "STANDARD"
 }
 
-data "google_dns_managed_zone" "my_dns_zone" {
-  name     = "my-zone"
-}
-
 # Create HTTPS certificate
 resource "google_compute_managed_ssl_certificate" "website" {
   provider = google
