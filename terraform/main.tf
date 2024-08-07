@@ -83,17 +83,20 @@ resource "google_compute_global_address" "website" {
   name     = "website-lb-ip"
 }
 
-resource "google_compute_project_default_network_tier" "default" {
-  network_tier = "STANDARD"
-}
-
-# Create HTTPS certificate
+# Create SSL certificate for HTTPS
 resource "google_compute_managed_ssl_certificate" "website" {
   provider = google
   name     = "website-cert"
   managed {
     domains = ["kadebc.com", "www.kadebc.com"]
   }
+}
+
+# website load balancer
+resource "google_compute_url_map" "website" {
+  provider        = google
+  name            = "website-url-map"
+  default_service = google_compute_backend_bucket.website.self_link
 }
 
 # Add the bucket as a CDN backend
@@ -105,14 +108,7 @@ resource "google_compute_backend_bucket" "website" {
   enable_cdn  = true
 }
 
-# GCP URL MAP
-resource "google_compute_url_map" "website" {
-  provider        = google
-  name            = "website-url-map"
-  default_service = google_compute_backend_bucket.website.self_link
-}
-
-# GCP target proxy
+# target proxy routes to lb (HTTPS)
 resource "google_compute_target_https_proxy" "website" {
   provider         = google
   name             = "website-target-proxy"
@@ -120,7 +116,7 @@ resource "google_compute_target_https_proxy" "website" {
   ssl_certificates = [google_compute_managed_ssl_certificate.website.self_link]
 }
 
-# GCP forwarding rule
+# GCP forwarding rule for HTTPS
 resource "google_compute_global_forwarding_rule" "default" {
   provider              = google
   name                  = "website-forwarding-rule"
@@ -129,24 +125,6 @@ resource "google_compute_global_forwarding_rule" "default" {
   ip_protocol           = "TCP"
   port_range            = "443"
   target                = google_compute_target_https_proxy.website.self_link
-}
-
-#HTTP access 
-resource "google_compute_target_http_proxy" "website_http" {
-  provider = google
-  name     = "website-target-http-proxy"
-  url_map  = google_compute_url_map.website.self_link
-}
-
-# GCP forwarding rule for HTTP traffic
-resource "google_compute_global_forwarding_rule" "http" {
-  provider              = google
-  name                  = "website-forwarding-rule-http"
-  load_balancing_scheme = "EXTERNAL"
-  ip_address            = google_compute_global_address.website.address
-  ip_protocol           = "TCP"
-  port_range            = "80"
-  target                = google_compute_target_http_proxy.website_http.self_link
 }
 
 #Firestore database
