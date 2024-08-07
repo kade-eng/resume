@@ -1,6 +1,6 @@
 {
-    "name": "sample-http",
-    "version": "0.0.1",
+    "name": "index-js",
+    "version": "0.0.2",
     "dependencies": {
       "@google-cloud/firestore": "^4.0.0",
       "cors": "^2.8.5"
