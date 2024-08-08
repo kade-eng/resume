@@ -78,6 +78,7 @@ resource "google_storage_bucket_object" "new_img" {
   source = "../site/imgs/new.png"
 }
 
+# reserve global IP for load balancer
 resource "google_compute_global_address" "website" {
   provider = google
   name     = "website-lb-ip"
@@ -92,13 +93,6 @@ resource "google_compute_managed_ssl_certificate" "website" {
   }
 }
 
-# website load balancer
-resource "google_compute_url_map" "website" {
-  provider        = google
-  name            = "website-url-map"
-  default_service = google_compute_backend_bucket.website.self_link
-}
-
 # Add the bucket as a CDN backend
 resource "google_compute_backend_bucket" "website" {
   provider    = google
@@ -106,6 +100,13 @@ resource "google_compute_backend_bucket" "website" {
   description = "Contains files needed by the website"
   bucket_name = google_storage_bucket.my_bucket.name
   enable_cdn  = true
+}
+
+# website load balancer
+resource "google_compute_url_map" "website" {
+  provider        = google
+  name            = "website-url-map"
+  default_service = google_compute_backend_bucket.website.self_link
 }
 
 # target proxy routes to lb (HTTPS)
